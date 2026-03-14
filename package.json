@@ -1,0 +1,24 @@
+{
+  "name": "vitest-101",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamdinan/vitest-101.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iamdinan/vitest-101/issues"
+  },
+  "homepage": "https://github.com/iamdinan/vitest-101#readme",
+  "devDependencies": {
+    "vitest": "^4.1.0"
+  }
+}
