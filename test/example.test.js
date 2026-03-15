@@ -68,3 +68,39 @@ describe("examples.isPrime", () => {
     expect(typeof isPrime(8)).toBe("boolean"); // another way to check if the result is of type boolean
   });
 });
+
+// test suite for isPrime
+describe("examples.isPrime", () => {
+  it("treats 0 and 1 as non-prime, and 2 as prime", () => {
+    expect(isPrime(0)).toBe(false);
+    expect(isPrime(1)).toBe(false);
+    expect(isPrime(2)).toBe(true);
+  });
+
+  it("returns false forall even numbers > 2", () => {
+    expect(isPrime(4)).toBe(false);
+    expect(isPrime(6)).toBe(false);
+    expect(isPrime(50)).toBe(false);
+  });
+
+  it("identifies common primes", () => {
+    expect(isPrime(3)).toBe(true);
+    expect(isPrime(5)).toBe(true);
+    expect(isPrime(7)).toBe(true);
+  });
+
+  it("returns false for perfect squares reliably", () => {
+    expect(isPrime(49)).toBe(false);
+    expect(isPrime(121)).toBe(false);
+  });
+
+  it("returns false for non integers", () => {
+    expect(isPrime(2.5)).toBe(false);
+    expect(isPrime(4.25)).toBe(false);
+  });
+
+  it("throws an error for non number integers", () => {
+    const badCall = () => isPrime("wonder woman");
+    expect(badCall).toThrow();
+  });
+});
