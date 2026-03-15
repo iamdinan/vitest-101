@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { longestString, isPrime } from "../src/example";
+import { longestString, isPrime, shippingCost } from "../src/example";
 
 // can import "test" from vitest and use it instead of "it" — both are identical
 //basic test case examples
@@ -102,5 +102,56 @@ describe("examples.isPrime", () => {
   it("throws an error for non number integers", () => {
     const badCall = () => isPrime("wonder woman");
     expect(badCall).toThrow();
+  });
+});
+
+// test suite for shippingCost
+describe("examples.shippingCost", () => {
+  //not much use in testing the error throwing, but we can check if the function throws an error when invalid input is provided
+  it("calculates cost based on weight", () => {
+    expect(shippingCost(0.5)).toBeTypeOf("number");
+  });
+
+  //checks the cost for different weight brackets
+  it("charges correctly for different weight brackets", () => {
+    expect(shippingCost(0.5)).toBe(3.99);
+    expect(shippingCost(3)).toBe(5.99);
+    expect(shippingCost(10)).toBe(8.99);
+    expect(shippingCost(25)).toBe(14.99);
+  });
+
+  //boundary test cases for weight input
+  it("handles boundary weight values", () => {
+    expect(shippingCost(1)).toBe(3.99); // upper bound of first bracket
+    expect(shippingCost(5)).toBe(5.99); // upper bound of second bracket
+    expect(shippingCost(20)).toBe(8.99); // upper bound of third bracket
+    expect(shippingCost(20.01)).toBe(14.99); // just above the upper bound of third bracket
+  });
+
+  //checks free shipping coupon code is applied correctly
+  it("applies free shipping coupon", () => {
+    expect(shippingCost(10, "FREESHIPPING")).toBe(0);
+    expect(shippingCost(100, "FREESHIPPING")).toBe(0);
+  });
+
+  it("ignores invalid coupon codes", () => {
+    expect(shippingCost(1, "freeshipping")).toBe(3.99);
+    expect(shippingCost(5, "nothing")).toBe(5.99);
+    expect(shippingCost(10)).toBe(8.99);
+  });
+
+  it("throws an error for invalid weight input", () => {
+    // this is correct but too strict, checks the exact error msg to be exactly same as one defined in function
+    expect(() => shippingCost(0)).toThrow("Weight must be greater than 0");
+    // this is a more flexible regex that doesn't rely on text order, checks if error msg contain words weight and 0
+    expect(() => shippingCost(0)).toThrow(/(?=.*weight)(?=.*0)/i);
+    expect(() => shippingCost(-5)).toThrow(/(?=.*weight)(?=.*0)/i);
+    expect(() => shippingCost("zod")).toThrow(/(?=.*weight)(?=.*number)/i);
+  });
+
+  it("throws an error for invalid coupon input", () => {
+    expect(() => shippingCost(1, 123)).toThrow(/(?=.*coupon)/i);
+    expect(() => shippingCost(1, {})).toThrow(/(?=.*coupon)/i);
+    expect(() => shippingCost(1, null)).toThrow(/(?=.*coupon)(?=.*string)/i);
   });
 });
