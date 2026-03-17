@@ -154,4 +154,27 @@ describe("examples.shippingCost", () => {
     expect(() => shippingCost(1, {})).toThrow(/(?=.*coupon)/i);
     expect(() => shippingCost(1, null)).toThrow(/(?=.*coupon)(?=.*string)/i);
   });
+
+  /*testing using it.each for multiple test cases with different inputs and expected outputs, 
+    reduces code duplication and makes it easier to add more test cases in future*/
+  it.each([
+    { weight: 0.5, expected: 3.99 },
+    { weight: 3, expected: 5.99 },
+    { weight: 10, expected: 8.99 },
+    { weight: 50, expected: 14.99 },
+  ])("charges $expected for weight $weight", ({ weight, expected }) => {
+    expect(shippingCost(weight)).toBe(expected);
+  });
+
+  it.each([
+    { weight: 1, expected: 3.99 },
+    { weight: 5, expected: 5.99 },
+    { weight: 20, expected: 8.99 },
+    { weight: 20.1, expected: 14.99 },
+  ])(
+    "handles boundary weight values: $weight => $expected",
+    ({ weight, expected }) => {
+      expect(shippingCost(weight)).toBe(expected); // upper bound of first bracket
+    },
+  );
 });
