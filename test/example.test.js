@@ -155,6 +155,8 @@ describe("examples.shippingCost", () => {
     expect(() => shippingCost(1, null)).toThrow(/(?=.*coupon)(?=.*string)/i);
   });
 
+  //parameterized testing
+
   /*testing using it.each for multiple test cases with different inputs and expected outputs, 
     reduces code duplication and makes it easier to add more test cases in future*/
   it.each([

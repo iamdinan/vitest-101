@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "test-ui": "vitest --ui"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/iamdinan/vitest-101#readme",
   "devDependencies": {
+    "@vitest/ui": "^4.1.0",
     "vitest": "^4.1.0"
   }
 }
