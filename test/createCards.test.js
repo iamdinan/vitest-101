@@ -19,26 +19,31 @@ describe("createCards", () => {
     "King",
   ];
 
+  //test if createCards returns an array
   it("returns an array", () => {
     const cards = createCards({ suits, values });
     expect(Array.isArray(cards)).toBe(true);
   });
 
+  //test if createCards creates a deck of 52 cards
   it("creates a deck of 52 cards", () => {
     const cards = createCards({ suits, values });
     expect(cards).toHaveLength(52);
   });
 
+  //test if createCards throws an error if suits or values are not standard lengths
   it("throws an error if suits or values are not standard lengths", () => {
     expect(() => createCards({ suits: ["Hearts"], values })).toThrow(/4/);
     expect(() => createCards({ suits, values: ["1", "2"] })).toThrow(/13/);
   });
 
+  //test if createCards throws an error if suits or values are not arrays
   it("throws an error if suits or values are not arrays", () => {
     expect(() => createCards({ suits: "not an array", values })).toThrow();
     expect(() => createCards({ suits, values: "not an array" })).toThrow();
   });
 
+  //test if createCards creates card objects with { value, suit } properties
   it("creates card objects with { value, suit } properties", () => {
     const cards = createCards({ suits, values });
     const sampleCard = cards[0];
@@ -48,6 +53,7 @@ describe("createCards", () => {
     expect(sampleCard).toHaveProperty("suit");
   });
 
+  //test if createCards creates combinations of suits and values
   it("creates combinations of suits and values", () => {
     const cards = createCards({ suits, values });
     const tenOfHearts = cards.find(
@@ -59,5 +65,36 @@ describe("createCards", () => {
       (c) => c.value === "Ace" && c.suit === "Spades", //find the Ace of Spades card
     );
     expect(aceOfSpades).toBeDefined();
+  });
+
+  //test if createCards throws an error for duplicate suits or values
+  it("throws an error for duplicate suits or values", () => {
+    expect(() =>
+      createCards({
+        suits: ["Hearts", "Diamonds", "Clubs", "Clubs"],
+        values,
+      }),
+    ).toThrow(/duplicates/);
+
+    expect(() =>
+      createCards({
+        suits,
+        values: [
+          "Ace",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "Jack",
+          "Queen",
+          "Ace",
+        ],
+      }),
+    ).toThrow(/duplicates/);
   });
 });

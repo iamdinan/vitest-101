@@ -12,6 +12,16 @@ export function createCards({ suits, values }) {
     );
   }
 
+  if (new Set(suits).size !== suits.length) {
+    //check for duplicate suits
+    throw new Error("suits array contains duplicates");
+  }
+
+  if (new Set(values).size !== values.length) {
+    //check for duplicate values
+    throw new Error("values array contains duplicates");
+  }
+
   let cards = [];
 
   for (let suit of suits) {
