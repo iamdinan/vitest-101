@@ -23,6 +23,14 @@ describe("loadDeck", () => {
 
     expect(deck.suits).toHaveLength(4);
     expect(deck.values).toHaveLength(13);
+
+    //asymetric Matchers - conveniently wraps all the above tests in a single It block
+    expect(deck).toEqual(
+      expect.objectContaining({
+        suits: expect.any(Array),
+        values: expect.any(Array),
+      }),
+    );
   });
 
   // check it supports other id's
